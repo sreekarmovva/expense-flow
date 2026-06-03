@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'widgets/expense_card.dart';
 import 'widgets/expense_form.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../providers/expense_provider.dart';
 
-class ExpenseScreen extends StatelessWidget {
+class ExpenseScreen extends ConsumerWidget {
   const ExpenseScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final expenses = ref.watch(expenseProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expenses'),
@@ -41,23 +44,13 @@ class ExpenseScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            const ExpenseCard(
-              expenseName: 'Netflix',
-              amount: '₹199',
-              category: 'Entertainment',
-              date: '01 Jun 2026',
-            ),
-            const ExpenseCard(
-              expenseName: 'Lunch',
-              amount: '₹250',
-              category: 'Food',
-              date: '02 Jun 2026',
-            ),
-            const ExpenseCard(
-              expenseName: 'Uber',
-              amount: '₹180',
-              category: 'Travel',
-              date: '03 Jun 2026',
+            ...expenses.map(
+              (expense) => ExpenseCard(
+                expenseName: expense.name,
+                amount: expense.amount,
+                category: expense.category,
+                date: expense.date,
+              ),
             ),
           ],
         ),

@@ -1,0 +1,26 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../models/expense.dart';
+
+final expenseProvider = Provider<List<Expense>>(
+  (ref) => [
+    const Expense(
+      name: 'Netflix',
+      amount: '₹199',
+      category: 'Entertainment',
+      date: '01 Jun 2026',
+    ),
+    const Expense(
+      name: 'Lunch',
+      amount: '₹250',
+      category: 'Food',
+      date: '02 Jun 2026',
+    ),
+    const Expense(
+      name: 'Coffee',
+      amount: '₹500',
+      category: 'Food',
+      date: '03 Jun 2026',
+    ),
+  ],
+);
