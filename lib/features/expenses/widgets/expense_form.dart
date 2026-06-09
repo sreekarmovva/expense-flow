@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../models/expense.dart';
+import '../../../providers/expense_provider.dart';
 
-class ExpenseForm extends StatelessWidget {
+class ExpenseForm extends ConsumerStatefulWidget {
   const ExpenseForm({super.key});
 
+  @override
+  ConsumerState<ExpenseForm> createState() => _ExpenseFormState();
+}
+
+class _ExpenseFormState extends ConsumerState<ExpenseForm> {
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController amountController = TextEditingController();
+
+  String selectedCategory = 'Food';
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -10,13 +23,15 @@ class ExpenseForm extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         TextField(
-          decoration: InputDecoration(
+          controller: nameController,
+          decoration: const InputDecoration(
             labelText: 'Expense Name',
           ),
         ),
         SizedBox(height: 12),
         TextField(
-          decoration: InputDecoration(
+          controller: amountController,
+          decoration: const InputDecoration(
             labelText: 'Amount',
           ),
         ),
@@ -47,7 +62,11 @@ class ExpenseForm extends StatelessWidget {
               child: Text('Shopping'),
             ),
           ],
-          onChanged: (value) {},
+          onChanged: (value) {
+            setState(() {
+              selectedCategory = value!;
+            });
+          },
         ),
         SizedBox(height: 12),
         TextField(
@@ -57,7 +76,18 @@ class ExpenseForm extends StatelessWidget {
         ),
         SizedBox(height: 20),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            final expense = Expense(
+              name: nameController.text,
+              amount: amountController.text,
+              category: selectedCategory,
+              date: 'Today',
+            );
+
+            ref.read(expenseProvider.notifier).addExpense(expense);
+
+            Navigator.pop(context);
+          },
           child: Text('Save Expense'),
         ),
       ],

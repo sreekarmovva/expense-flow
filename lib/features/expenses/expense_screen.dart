@@ -3,6 +3,7 @@ import 'widgets/expense_card.dart';
 import 'widgets/expense_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/expense_provider.dart';
+import '../../models/expense.dart';
 
 class ExpenseScreen extends ConsumerWidget {
   const ExpenseScreen({super.key});
@@ -16,7 +17,7 @@ class ExpenseScreen extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
+        child: ListView(
           children: [
             ElevatedButton(
               onPressed: () {
