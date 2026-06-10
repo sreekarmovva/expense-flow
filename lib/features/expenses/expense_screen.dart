@@ -51,6 +51,9 @@ class ExpenseScreen extends ConsumerWidget {
                 amount: expense.amount,
                 category: expense.category,
                 date: expense.date,
+                onDelete: () {
+                  ref.read(expenseProvider.notifier).deleteExpense(expense);
+                },
               ),
             ),
           ],

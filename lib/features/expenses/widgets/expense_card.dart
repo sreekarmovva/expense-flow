@@ -5,12 +5,14 @@ class ExpenseCard extends StatelessWidget {
   final String amount;
   final String category;
   final String date;
+  final VoidCallback onDelete;
   const ExpenseCard({
     super.key,
     required this.expenseName,
     required this.amount,
     required this.category,
     required this.date,
+    required this.onDelete,
   });
 
   @override
@@ -45,7 +47,7 @@ class ExpenseCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onDelete,
                   child: const Text('Delete'),
                 ),
               ],

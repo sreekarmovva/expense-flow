@@ -30,6 +30,10 @@ class ExpenseNotifier extends Notifier<List<Expense>> {
   void addExpense(Expense expense) {
     state = [...state, expense];
   }
+
+  void deleteExpense(Expense expense) {
+    state = state.where((item) => item != expense).toList();
+  }
 }
 
 final expenseProvider = NotifierProvider<ExpenseNotifier, List<Expense>>(
