@@ -4,7 +4,11 @@ import '../../../models/expense.dart';
 import '../../../providers/expense_provider.dart';
 
 class ExpenseForm extends ConsumerStatefulWidget {
-  const ExpenseForm({super.key});
+  final Expense? expense;
+  const ExpenseForm({
+    super.key,
+    this.expense,
+  });
 
   @override
   ConsumerState<ExpenseForm> createState() => _ExpenseFormState();
@@ -16,6 +20,17 @@ class _ExpenseFormState extends ConsumerState<ExpenseForm> {
   final TextEditingController amountController = TextEditingController();
 
   String selectedCategory = 'Food';
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.expense != null) {
+      nameController.text = widget.expense!.name;
+      amountController.text = widget.expense!.amount;
+      selectedCategory = widget.expense!.category;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -37,6 +52,7 @@ class _ExpenseFormState extends ConsumerState<ExpenseForm> {
         ),
         SizedBox(height: 12),
         DropdownButtonFormField<String>(
+          value: selectedCategory,
           decoration: InputDecoration(
             labelText: 'Category',
           ),
@@ -84,7 +100,14 @@ class _ExpenseFormState extends ConsumerState<ExpenseForm> {
               date: 'Today',
             );
 
-            ref.read(expenseProvider.notifier).addExpense(expense);
+            if (widget.expense == null) {
+              ref.read(expenseProvider.notifier).addExpense(expense);
+            } else {
+              ref.read(expenseProvider.notifier).editExpense(
+                    widget.expense!,
+                    expense,
+                  );
+            }
 
             Navigator.pop(context);
           },

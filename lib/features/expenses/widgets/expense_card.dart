@@ -6,6 +6,7 @@ class ExpenseCard extends StatelessWidget {
   final String category;
   final String date;
   final VoidCallback onDelete;
+  final VoidCallback onEdit;
   const ExpenseCard({
     super.key,
     required this.expenseName,
@@ -13,6 +14,7 @@ class ExpenseCard extends StatelessWidget {
     required this.category,
     required this.date,
     required this.onDelete,
+    required this.onEdit,
   });
 
   @override
@@ -42,7 +44,7 @@ class ExpenseCard extends StatelessWidget {
             Column(
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onEdit,
                   child: const Text('Edit'),
                 ),
                 const SizedBox(height: 8),

@@ -51,6 +51,19 @@ class ExpenseScreen extends ConsumerWidget {
                 amount: expense.amount,
                 category: expense.category,
                 date: expense.date,
+                onEdit: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Edit Expense'),
+                        content: ExpenseForm(
+                          expense: expense,
+                        ),
+                      );
+                    },
+                  );
+                },
                 onDelete: () {
                   ref.read(expenseProvider.notifier).deleteExpense(expense);
                 },

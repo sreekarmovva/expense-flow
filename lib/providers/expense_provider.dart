@@ -34,6 +34,18 @@ class ExpenseNotifier extends Notifier<List<Expense>> {
   void deleteExpense(Expense expense) {
     state = state.where((item) => item != expense).toList();
   }
+
+  void editExpense(
+    Expense oldExpense,
+    Expense updatedExpense,
+  ) {
+    state = state.map((expense) {
+      if (expense == oldExpense) {
+        return updatedExpense;
+      }
+      return expense;
+    }).toList();
+  }
 }
 
 final expenseProvider = NotifierProvider<ExpenseNotifier, List<Expense>>(
