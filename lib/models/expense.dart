@@ -10,4 +10,13 @@ class Expense {
     required this.category,
     required this.date,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'amount': amount,
+      'category': category,
+      'date': date,
+    };
+  }
 }
