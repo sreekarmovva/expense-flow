@@ -7,7 +7,7 @@ final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const ExpenseScreen(),
+      builder: (context, state) => const DashboardScreen(),
     ),
   ],
 );

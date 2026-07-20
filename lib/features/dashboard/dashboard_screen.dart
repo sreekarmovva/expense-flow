@@ -3,12 +3,20 @@ import 'widgets/monthly_summary_card.dart';
 import '../../shared/widgets/category_row.dart';
 import '../../shared/widgets/section_title.dart';
 import '../../shared/widgets/transaction_row.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../providers/expense_provider.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final expenses = ref.watch(expenseProvider);
+    double total = 0;
+
+    for (final expense in expenses) {
+      total += double.parse(expense.amount);
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('ExpenseFlow'),
@@ -17,9 +25,9 @@ class DashboardScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             MonthlySummaryCard(
-              amount: '₹12,500',
+              amount: '₹${total.toString()}',
             ),
             SizedBox(height: 24),
             SectionTitle(
