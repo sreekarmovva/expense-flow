@@ -7,29 +7,39 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('PennyPilot'),
-        centerTitle: true,
-      ),
-      body: Padding(
+        body: SafeArea(
+      child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            const Text(
-              '🧭 Welcome to PennyPilot',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+            Center(
+              child: Image.asset(
+                'assets/logos/pennypilot_logo.png',
+                width: 90,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Center(
+              child: Text(
+                'PennyPilot',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Every Penny Has a Direction.',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Every Penny Has a Direction.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 171, 170, 170),
+                ),
               ),
             ),
             const SizedBox(height: 40),
@@ -77,6 +87,6 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
