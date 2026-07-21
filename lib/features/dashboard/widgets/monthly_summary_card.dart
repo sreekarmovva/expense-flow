@@ -23,7 +23,7 @@ class MonthlySummaryCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            const Text('Total This Month'),
+            const Text('Total Expenses'),
           ],
         ),
       ),
