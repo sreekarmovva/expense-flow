@@ -10,7 +10,7 @@ class ExpenseFlowApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'ExpenseFlow',
+      title: 'PennyPilot',
       theme: lightTheme,
       darkTheme: darkTheme,
       routerConfig: appRouter,

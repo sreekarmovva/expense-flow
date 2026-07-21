@@ -5,6 +5,7 @@ import '../../shared/widgets/section_title.dart';
 import '../../shared/widgets/transaction_row.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/expense_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -14,12 +15,34 @@ class DashboardScreen extends ConsumerWidget {
     final expenses = ref.watch(expenseProvider);
     double total = 0;
 
+    Map<String, double> categoryTotals = {};
+
+    for (final expense in expenses) {
+      if (categoryTotals.containsKey(expense.category)) {
+        categoryTotals[expense.category] =
+            categoryTotals[expense.category]! + double.parse(expense.amount);
+      } else {
+        categoryTotals[expense.category] = double.parse(expense.amount);
+      }
+    }
+    final sortedCategories = categoryTotals.entries.toList();
+
+    sortedCategories.sort((a, b) {
+      return b.value.compareTo(a.value);
+    });
+
     for (final expense in expenses) {
       total += double.parse(expense.amount);
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ExpenseFlow'),
+        leading: IconButton(
+          icon: const Icon(Icons.home_outlined),
+          onPressed: () {
+            context.go('/');
+          },
+        ),
+        title: const Text('Dashboard'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -33,34 +56,22 @@ class DashboardScreen extends ConsumerWidget {
             SectionTitle(
               title: 'Top Categories',
             ),
-            CategoryRow(
-              categoryName: 'Food',
-              amount: '₹3000',
-            ),
-            CategoryRow(
-              categoryName: 'Travel',
-              amount: '₹2500',
-            ),
-            CategoryRow(
-              categoryName: 'Bills',
-              amount: '₹2000',
-            ),
+            ...sortedCategories.take(3).map((entry) {
+              return CategoryRow(
+                categoryName: entry.key,
+                amount: '₹${entry.value}',
+              );
+            }),
             SizedBox(height: 24),
             SectionTitle(
               title: 'Recent Transactions',
             ),
-            TransactionRow(
-              transactionName: 'Netflix',
-              amount: '₹199',
-            ),
-            TransactionRow(
-              transactionName: 'Lunch',
-              amount: '₹250',
-            ),
-            TransactionRow(
-              transactionName: 'Uber',
-              amount: '₹180',
-            ),
+            ...expenses.map((expense) {
+              return TransactionRow(
+                transactionName: expense.name,
+                amount: '₹${expense.amount}',
+              );
+            }),
           ],
         ),
       ),

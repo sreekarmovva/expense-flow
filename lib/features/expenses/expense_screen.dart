@@ -3,7 +3,7 @@ import 'widgets/expense_card.dart';
 import 'widgets/expense_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/expense_provider.dart';
-import '../../models/expense.dart';
+import 'package:go_router/go_router.dart';
 
 class ExpenseScreen extends ConsumerWidget {
   const ExpenseScreen({super.key});
@@ -13,7 +13,13 @@ class ExpenseScreen extends ConsumerWidget {
     final expenses = ref.watch(expenseProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Expenses'),
+        leading: IconButton(
+          icon: const Icon(Icons.home_outlined),
+          onPressed: () {
+            context.go('/');
+          },
+        ),
+        title: const Text('Manage Expenses'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
